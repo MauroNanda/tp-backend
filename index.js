@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const swaggerUI = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
 require('dotenv').config();
 
 const { db } = require('./db/config');
@@ -15,6 +17,16 @@ app.use('/api/socios', require('./routes/socios.routes'));
 app.use('/api/transacciones', require('./routes/transacciones.routes'));
 app.use('/api/empleados', require('./routes/empleados.routes'));
 app.use('/api/publicaciones', require('./routes/publicaciones.routes'));
+
+// Swagger setup
+const swaggerSpec = {
+  definition: {
+    openapi: '3.0.0',
+    info: { title: 'TP Backend API', version: '1.0.0' },
+  },
+  apis: ['./routes/*.js'],
+};
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)));
 
 app.get('/', (req, res) => {
   res.send('API is running...');
