@@ -1,8 +1,17 @@
 const Transaccion = require('../models/Transaccion');
+const Cliente = require('../models/Cliente');
 
 const getTransacciones = async (req, res) => {
   try {
-    const transacciones = await Transaccion.findAll();
+    // PUNTO 4: Redefinición del método para recuperar transacciones incluyendo información del Cliente.
+    // Usamos 'include' para que Sequelize haga un JOIN automático con la tabla Clientes y devuelva el objeto Cliente anidado dentro de cada Transacción.
+    const transacciones = await Transaccion.findAll({
+      include: {
+        model: Cliente,
+        as: 'Cliente',
+        attributes: ['nombre', 'apellido', 'dni']
+      }
+    });
     res.json(transacciones);
   } catch (error) {
     res.status(500).json({ msg: 'Error al obtener transacciones', error });

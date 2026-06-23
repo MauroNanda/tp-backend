@@ -24,4 +24,11 @@ const Transaccion = db.define('Transaccion', {
   }
 });
 
+// PUNTO 3: Modificar estructura de Transaccion agregando un atributo del tipo Cliente
+const Cliente = require('./Cliente');
+
+// Esto establece la relación en la base de datos (clave foránea clienteId en Transaccion) y permite que Sequelize incluya (join) el objeto Cliente al consultar una Transaccion.
+Cliente.hasMany(Transaccion, { foreignKey: 'clienteId' });
+Transaccion.belongsTo(Cliente, { foreignKey: 'clienteId', as: 'Cliente' });
+
 module.exports = Transaccion;

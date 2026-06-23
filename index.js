@@ -12,7 +12,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Rutas (to be added)
+// Rutas
+app.use('/api/clientes', require('./routes/clientes.routes'));
 app.use('/api/socios', require('./routes/socios.routes'));
 app.use('/api/transacciones', require('./routes/transacciones.routes'));
 app.use('/api/empleados', require('./routes/empleados.routes'));
