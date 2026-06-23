@@ -44,13 +44,17 @@ const buscarPublicaciones = async (req, res) => {
 
 const createPublicacion = async (req, res) => {
   try {
-    // body espera: Título, Contenido, ImagenAsociada, fechaPublicación, empleado (id o objeto)
     const { empleado, ...resto } = req.body;
     let empleadoId = empleado;
     
-    // Si mandaron el objeto entero en vez del ID
     if (typeof empleado === 'object' && empleado !== null) {
       empleadoId = empleado.id;
+    }
+
+    // PLUS: Validar que el empleado realmente exista antes de insertar
+    const empleadoExiste = await Empleado.findByPk(empleadoId);
+    if (!empleadoExiste) {
+      return res.status(404).json({ msg: `El empleado con ID ${empleadoId} no existe. Crea un empleado primero.` });
     }
 
     const nuevaPublicacion = await Publicacion.create({
@@ -60,7 +64,9 @@ const createPublicacion = async (req, res) => {
 
     res.json(nuevaPublicacion);
   } catch (error) {
-    res.status(500).json({ msg: 'Error al crear publicacion', error });
+    // Si es un error gigante de Sequelize, extraemos solo el mensaje corto
+    const mensajeCorto = error.message || 'Error desconocido en la base de datos';
+    res.status(500).json({ msg: 'Error al crear publicación: ' + mensajeCorto });
   }
 };
 

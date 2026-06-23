@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createCliente } = require('../controllers/clientes.controller');
+const { createCliente, getClientes } = require('../controllers/clientes.controller');
 
 const router = Router();
 
@@ -9,6 +9,18 @@ const router = Router();
  *   name: Clientes
  *   description: API para gestión de clientes
  */
+
+/**
+ * @swagger
+ * /api/clientes:
+ *   get:
+ *     summary: Obtiene todos los clientes
+ *     tags: [Clientes]
+ *     responses:
+ *       200:
+ *         description: Lista de clientes
+ */
+router.get('/', getClientes);
 
 /**
  * @swagger

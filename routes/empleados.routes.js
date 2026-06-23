@@ -2,7 +2,8 @@ const { Router } = require('express');
 const {
   getEmpleados,
   getEmpleado,
-  createEmpleado
+  createEmpleado,
+  deleteEmpleado
 } = require('../controllers/empleados.controller');
 
 const router = Router();
@@ -72,5 +73,23 @@ router.get('/:id', getEmpleado);
  *         description: Empleado creado
  */
 router.post('/', createEmpleado);
+
+/**
+ * @swagger
+ * /api/empleados/{id}:
+ *   delete:
+ *     summary: Elimina un empleado
+ *     tags: [Empleados]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Empleado eliminado
+ */
+router.delete('/:id', deleteEmpleado);
 
 module.exports = router;

@@ -32,8 +32,23 @@ const createEmpleado = async (req, res) => {
   }
 };
 
+const deleteEmpleado = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const empleado = await Empleado.findByPk(id);
+    if (!empleado) {
+      return res.status(404).json({ msg: 'Empleado no encontrado' });
+    }
+    await empleado.destroy();
+    res.json({ msg: 'Empleado eliminado' });
+  } catch (error) {
+    res.status(500).json({ msg: 'Error al eliminar empleado', error });
+  }
+};
+
 module.exports = {
   getEmpleados,
   getEmpleado,
-  createEmpleado
+  createEmpleado,
+  deleteEmpleado
 };

@@ -53,9 +53,24 @@ const createTransaccion = async (req, res) => {
   }
 };
 
+const deleteTransaccion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const transaccion = await Transaccion.findByPk(id);
+    if (!transaccion) {
+      return res.status(404).json({ msg: 'Transaccion no encontrada' });
+    }
+    await transaccion.destroy();
+    res.json({ msg: 'Transaccion eliminada' });
+  } catch (error) {
+    res.status(500).json({ msg: 'Error al eliminar transaccion', error });
+  }
+};
+
 module.exports = {
   getTransacciones,
   getHistorialCliente,
   getTransaccionesPorIdioma,
-  createTransaccion
+  createTransaccion,
+  deleteTransaccion
 };

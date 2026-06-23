@@ -3,7 +3,8 @@ const {
   getTransacciones,
   getHistorialCliente,
   getTransaccionesPorIdioma,
-  createTransaccion
+  createTransaccion,
+  deleteTransaccion
 } = require('../controllers/transacciones.controller');
 
 const router = Router();
@@ -96,5 +97,23 @@ router.get('/filtrar/:origen/:destino', getTransaccionesPorIdioma);
  *         description: Transacción registrada
  */
 router.post('/', createTransaccion);
+
+/**
+ * @swagger
+ * /api/transacciones/{id}:
+ *   delete:
+ *     summary: Elimina una transaccion
+ *     tags: [Transacciones]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Transaccion eliminada
+ */
+router.delete('/:id', deleteTransaccion);
 
 module.exports = router;

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TP Backend - Gestión</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Sistema</h2>
+    <button onclick="showTab('clientes')">Clientes</button>
+    <button onclick="showTab('socios')">Socios</button>
+    <button onclick="showTab('transacciones')">Transacciones</button>
+    <button onclick="showTab('empleados')">Empleados</button>
+    <button onclick="showTab('publicaciones')">Publicaciones</button>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <h1 id="page-title">Gestión</h1>
+    </header>
+
+    <!-- Clientes -->
+    <div id="tab-clientes" class="tab-content" style="display: none;">
+      <div class="actions-header">
+        <button class="primary-btn" onclick="toggleForm('clientes')">+ Nuevo Cliente</button>
+        <button class="refresh-btn" onclick="loadData('clientes')">↻ Refrescar</button>
+      </div>
+      <div class="card form-card" id="form-container-clientes" style="display: none;">
+        <h3>Datos del Cliente</h3>
+        <form id="form-clientes" onsubmit="submitForm(event, 'clientes')">
+          <input type="text" name="nombre" placeholder="Nombre" required>
+          <input type="text" name="apellido" placeholder="Apellido" required>
+          <input type="text" name="dni" placeholder="DNI" required>
+          <button type="submit" class="save-btn">Guardar</button>
+        </form>
+      </div>
+      <div class="card table-card">
+        <table>
+          <thead><tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>DNI</th></tr></thead>
+          <tbody id="tbody-clientes"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Socios -->
+    <div id="tab-socios" class="tab-content" style="display: none;">
+      <div class="actions-header">
+        <button class="primary-btn" onclick="toggleForm('socios')">+ Nuevo Socio</button>
+        <button class="refresh-btn" onclick="loadData('socios')">↻ Refrescar</button>
+      </div>
+      <div class="card form-card" id="form-container-socios" style="display: none;">
+        <h3>Datos del Socio</h3>
+        <form id="form-socios" onsubmit="submitForm(event, 'socios')">
+          <input type="text" name="nombre" placeholder="Nombre" required>
+          <input type="text" name="apellido" placeholder="Apellido" required>
+          <input type="text" name="dni" placeholder="DNI" required>
+          <input type="number" name="numeroSocio" placeholder="Nº Socio" required>
+          <button type="submit" class="save-btn">Guardar</button>
+        </form>
+      </div>
+      <div class="card table-card">
+        <table>
+          <thead><tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>DNI</th><th>Nº Socio</th><th>Activo</th><th>Acciones</th></tr></thead>
+          <tbody id="tbody-socios"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Transacciones -->
+    <div id="tab-transacciones" class="tab-content" style="display: none;">
+      <div class="actions-header">
+        <button class="primary-btn" onclick="toggleForm('transacciones')">+ Nueva Transacción</button>
+        <button class="refresh-btn" onclick="loadData('transacciones')">↻ Refrescar</button>
+      </div>
+      <div class="card form-card" id="form-container-transacciones" style="display: none;">
+        <h3>Datos de Transacción</h3>
+        <form id="form-transacciones" onsubmit="submitForm(event, 'transacciones')">
+          <input type="text" name="IdiomaOrigen" placeholder="Idioma Origen" required>
+          <input type="text" name="TextoOrigen" placeholder="Texto Origen" required>
+          <input type="text" name="IdiomaDestino" placeholder="Idioma Destino" required>
+          <input type="text" name="TextoDestino" placeholder="Texto Destino" required>
+          <input type="email" name="emailCliente" placeholder="Email Cliente (Backup)" required>
+          <input type="number" name="clienteId" placeholder="ID Cliente (Relación)" required>
+          <button type="submit" class="save-btn">Guardar</button>
+        </form>
+      </div>
+      <div class="card table-card">
+        <table>
+          <thead><tr><th>ID</th><th>C. ID</th><th>Cliente Info</th><th>Origen</th><th>Destino</th></tr></thead>
+          <tbody id="tbody-transacciones"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Empleados -->
+    <div id="tab-empleados" class="tab-content" style="display: none;">
+      <div class="actions-header">
+        <button class="primary-btn" onclick="toggleForm('empleados')">+ Nuevo Empleado</button>
+        <button class="refresh-btn" onclick="loadData('empleados')">↻ Refrescar</button>
+      </div>
+      <div class="card form-card" id="form-container-empleados" style="display: none;">
+        <h3>Datos del Empleado</h3>
+        <form id="form-empleados" onsubmit="submitForm(event, 'empleados')">
+          <input type="text" name="nombre" placeholder="Nombre" required>
+          <input type="text" name="apellido" placeholder="Apellido" required>
+          <input type="text" name="dni" placeholder="DNI" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <button type="submit" class="save-btn">Guardar</button>
+        </form>
+      </div>
+      <div class="card table-card">
+        <table>
+          <thead><tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Email</th></tr></thead>
+          <tbody id="tbody-empleados"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Publicaciones -->
+    <div id="tab-publicaciones" class="tab-content" style="display: none;">
+      <div class="actions-header">
+        <button class="primary-btn" onclick="toggleForm('publicaciones')">+ Nueva Publicación</button>
+        <button class="refresh-btn" onclick="loadData('publicaciones')">↻ Refrescar</button>
+      </div>
+      <div class="card form-card" id="form-container-publicaciones" style="display: none;">
+        <h3>Datos de Publicación</h3>
+        <form id="form-publicaciones" onsubmit="submitForm(event, 'publicaciones')">
+          <input type="text" name="Título" placeholder="Título" required>
+          <input type="text" name="Contenido" placeholder="Contenido" required>
+          <input type="date" name="fechaPublicación" required title="Fecha de Publicación">
+          <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" name="vigente"> Vigente</label>
+          <input type="number" name="empleado" placeholder="ID Empleado" required>
+          <button type="submit" class="save-btn">Guardar</button>
+        </form>
+      </div>
+      <div class="card table-card">
+        <table>
+          <thead><tr><th>ID</th><th>Título</th><th>Vigente</th><th>Empleado ID</th><th>Acciones</th></tr></thead>
+          <tbody id="tbody-publicaciones"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
